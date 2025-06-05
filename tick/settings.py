@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'planner',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -135,4 +136,8 @@ DATABASES = {
         },
     }
 }
+
+CRONJOBS = [
+    ('*/1 * * * *', 'planner.management.commands.send_message', '>> /tmp/cronjob.log 2>&1'),
+]
 
