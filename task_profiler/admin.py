@@ -1,0 +1,20 @@
+from django.contrib import admin
+from .models import Profile, TaskLog
+# Register your models here.
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'slack_auth')
+    search_fields = ('user__username', 'slack_auth')
+    readonly_fields = ('user',)
+
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:  # When creating a new object
+            obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+@admin.register(TaskLog)
+class TaskLogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'task', 'created_at', 'updated_at')
+    search_fields = ('task__name',)
+
