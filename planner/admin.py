@@ -9,6 +9,8 @@ class TopicAdmin(admin.ModelAdmin):
     search_fields = ('name', 'slack_channel')
     list_editable = ('is_active',)
     readonly_fields = ('user',)
+    ordering = ('id',)
+    
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # When creating a new object
@@ -21,6 +23,8 @@ class AssigneeAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     search_fields = ('name', 'slack_user')
     list_editable = ('is_active',)
+    ordering = ('id',)
+
     
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
@@ -29,6 +33,8 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ('name', 'assignee__name', 'topic__name')
     list_editable = ('is_active',)
     readonly_fields = ('user',)
+    ordering = ('id',)
+
 
 
     def save_model(self, request, obj, form, change):

@@ -6,6 +6,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'slack_auth')
     search_fields = ('user__username', 'slack_auth')
     readonly_fields = ('user',)
+    ordering = ('id',)
 
 
     def save_model(self, request, obj, form, change):
@@ -17,4 +18,6 @@ class ProfileAdmin(admin.ModelAdmin):
 class TaskLogAdmin(admin.ModelAdmin):
     list_display = ('id', 'task', 'created_at', 'updated_at')
     search_fields = ('task__name',)
+    ordering = ('id',)
+
 

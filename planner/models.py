@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Topic(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    slack_channel = models.CharField(max_length=200)
+    slack_channel = models.CharField(max_length=200, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
     def __str__(self):

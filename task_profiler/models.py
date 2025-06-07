@@ -11,9 +11,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class TaskLog(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

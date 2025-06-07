@@ -134,4 +134,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SLACK_BOT_TOKEN = os.getenv('SLACK_BOT_TOKEN')
+SLACK_CHANNEL = os.getenv('SLACK_CHANNEL')
+SLACK_APP_CLIENT_ID = os.getenv('SLACK_APP_CLIENT_ID')
+SLACK_APP_CLIENT_SECRET = os.getenv('SLACK_APP_CLIENT_SECRET')
+REDIRECT_URI = os.getenv('REDIRECT_URI')
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+CRONJOBS = [
+    ('*/1 * * * *', 'task_profiler.cron_jobs.create_tasklogs', '>> /tmp/cronjob.log 2>&1'),
+]
 
