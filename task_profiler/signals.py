@@ -9,9 +9,9 @@ def task_log_post_save(sender, instance, created, **kwargs):
     This signal runs after a TaskLog instance is saved.
     """
     if created:
-        task = instance.task.assignee.name + " - " + instance.task.name
+        message = f"<@{instance.task.assignee.slack_user}> {instance.task.name} - {instance.task.topic.name}"
         channel = instance.task.topic.slack_channel
         assignee = instance.task.assignee.name
-        send_slack_message(task,channel,assignee)
+        send_slack_message(message,channel,assignee)
 
-        print(f"Task: {task}, Channel: {channel}, Assignee: {assignee}")
+        print(f"Message: {message}, Channel: {channel}, Assignee: {assignee}")
