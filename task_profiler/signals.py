@@ -6,7 +6,7 @@ from .utils import send_slack_message
 @receiver(post_save, sender=TaskLog)
 def task_log_post_save(sender, instance, created, **kwargs):
     """
-    This signal runs after a TaskLog instance is saved.
+    This signal runs after a TaskLog instance is s [aved.
     """
     if created:
         message = f"<@{instance.task.assignee.slack_user}> {instance.task.name} - {instance.task.topic.name}"

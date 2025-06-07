@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Topic, Assignee, Task
+from .models import Topic, Assignee, Task, Workspace
 
 # Register your models here.
 @admin.register(Topic)
@@ -43,4 +43,11 @@ class TaskAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+@admin.register(Workspace)
+class WorkspaceAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('name',)
+    list_editable = ('is_active',)
+    ordering = ('id',)
 
