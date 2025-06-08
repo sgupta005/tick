@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Workspace(models.Model):
@@ -38,6 +39,14 @@ class Task(models.Model):
     
     def __str__(self):
         return self.name
+    
+class Question(models.Model):
+    question = models.TextField()
+    answer = models.TextField(blank=True, null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.question
     
 
     

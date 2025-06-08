@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Topic, Assignee, Task, Workspace
+from .models import Topic, Assignee, Task, Workspace, Question
+from .forms import QuestionInlineForm
 
 # Register your models here.
 @admin.register(Topic)
@@ -25,6 +26,10 @@ class AssigneeAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     ordering = ('id',)
 
+class QuestionInline(admin.TabularInline):
+    model = Question
+    extra = 0
+    form = QuestionInlineForm
     
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
@@ -34,6 +39,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     readonly_fields = ('user',)
     ordering = ('id',)
+    inlines = [QuestionInline]
 
 
 
@@ -51,3 +57,9 @@ class WorkspaceAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     ordering = ('id',)
 
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'task', 'answer')
+    list_filter = ('task',)
+    search_fields = ('question', 'task__name')
+    ordering = ('id',)
