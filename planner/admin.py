@@ -26,6 +26,13 @@ class AssigneeAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     ordering = ('id',)
 
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'task', 'answer')
+    list_filter = ('task',)
+    search_fields = ('question', 'task__name')
+    ordering = ('id',)
+
 class QuestionInline(admin.TabularInline):
     model = Question
     extra = 0
@@ -41,8 +48,6 @@ class TaskAdmin(admin.ModelAdmin):
     ordering = ('id',)
     inlines = [QuestionInline]
 
-
-
     def save_model(self, request, obj, form, change):
         if not obj.pk:  # When creating a new object
             obj.user = request.user
@@ -57,9 +62,3 @@ class WorkspaceAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     ordering = ('id',)
 
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'task', 'answer')
-    list_filter = ('task',)
-    search_fields = ('question', 'task__name')
-    ordering = ('id',)
