@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from planner.models import Task
+from planner.models import Task, Question
 # Create your models here.
 
 class Profile(models.Model):
@@ -11,9 +11,11 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-
 class TaskLog(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
+    openai_log = models.TextField(blank=True, null=True)
+    slack_post_log = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -10,11 +10,16 @@ def task_log_post_save(sender, instance, created, **kwargs):
     """
     if created:
         # send message to chatgpt to frame a formal question
-        question = get_question_from_openai(instance.task)
+        openai_result = get_question_from_openai(instance.task)
+        question = openai_result["output"]
+        instance.openai_log = openai_result["openai_response"]
         # send the question to slack
-        channel = instance.task.topic.slack_channel
-        assignee_slack_user = instance.task.assignee.slack_user
-        question_ts = send_slack_message(question,channel,assignee_slack_user)
+        slack_result = send_slack_message(question,instance.task)
+        question_ts = slack_result["ts"]
+        instance.slack_post_log = slack_result["slack_response"]
         # use the question to create a new question object
-        create_question_for_task(instance.task, question, question_ts)
+        question_obj = create_question_for_task(instance.task, question, question_ts)
+        instance.question = question_obj
+        # save the changes made to tasklog
+        instance.save()
         

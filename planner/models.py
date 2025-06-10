@@ -41,6 +41,7 @@ class Task(models.Model):
         return self.name
     
 class Question(models.Model):
+    thread = models.TextField(blank=True, null=True)
     question = models.TextField()
     answer = models.TextField(blank=True, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
@@ -48,6 +49,14 @@ class Question(models.Model):
     
     def __str__(self):
         return self.question
+    
+class Reply(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.TextField()
+    timestamp = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.reply
     
 
     

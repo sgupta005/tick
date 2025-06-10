@@ -29,20 +29,22 @@ def get_question_from_openai(task):
     )
 
     output = completion.choices[0].message.content
-    print(output)
-
-    return output
+    return {"output":output, "openai_response":completion}
 
 def create_question_for_task(task, question, question_ts):
-    Question.objects.create(
+    question_obj = Question.objects.create(
         question=question,
         task=task,
         timestamp=question_ts
     )
+    return question_obj
 
-def send_slack_message(message,channel,assignee_slack_user):
-    slack_token = settings.SLACK_BOT_TOKEN
-    client = WebClient(slack_token)
+def send_slack_message(message,task):
+    channel = task.topic.slack_channel
+    assignee_slack_user = task.assignee.slack_user
+    slack_bot_token = task.topic.workspace.bot_token
+
+    client = WebClient(slack_bot_token)
     message_with_slack_user = f"<@{assignee_slack_user}> {message}"
 
     try:
@@ -50,10 +52,10 @@ def send_slack_message(message,channel,assignee_slack_user):
             channel=channel,
             text=message_with_slack_user
         )
-        return response["ts"]
+        return {"slack_response":response, "ts":response["ts"]}
     except SlackApiError as e:
         assert e.response["error"]   
-        return None
+        return {"slack_response":None, "ts":None}
 
 def get_question_replies_from_slack(channel, question_ts):
     slack_token = settings.SLACK_BOT_TOKEN
