@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.management import call_command
 from .models import CronJobStatus
-
+from django.contrib.auth.decorators import login_required
 
 def slack_oauth_callback(request):
     code = request.GET.get("code")
@@ -28,7 +28,7 @@ def slack_oauth_callback(request):
     else:
         return HttpResponse(f"OAuth failed: {data.get('error')}")
 
-
+@login_required
 def cron_dashboard(request):
     """Display the cronjob control dashboard"""
     status = CronJobStatus.get_status()
@@ -37,6 +37,7 @@ def cron_dashboard(request):
     })
 
 
+@login_required
 def toggle_cronjob(request):
     """Toggle cronjobs on/off"""
     if request.method == 'POST':
