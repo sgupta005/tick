@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('slack/', include('task_profiler.urls')),
+    path('', include('task_profiler.urls')),
 ]

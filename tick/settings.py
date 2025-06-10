@@ -148,6 +148,6 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 CRONJOBS = [
     ('*/1 * * * *', 'task_profiler.cron_jobs.create_tasklogs', '>> /tmp/cronjob.log 2>&1'),
     ('*/1 * * * *', 'task_profiler.cron_jobs.check_pending_questions_replies', '>> /tmp/cronjob.log 2>&1'),
-    # ('*/1 * * * *', 'task_profiler.cron_jobs.check_all_quesitons_replies', '>> /tmp/cronjob.log 2>&1'),
+    ('*/1 * * * *', 'task_profiler.cron_jobs.check_all_quesitons_replies', '>> /tmp/cronjob.log 2>&1'),
 ]
 

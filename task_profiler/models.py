@@ -22,5 +22,22 @@ class TaskLog(models.Model):
 
     def __str__(self):
         return self.task.name
+
+class CronJobStatus(models.Model):
+    is_running = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Cron Job Status"
+        verbose_name_plural = "Cron Job Status"
+
+    def __str__(self):
+        return f"Cronjobs {'Running' if self.is_running else 'Stopped'}"
+
+    @classmethod
+    def get_status(cls):
+        status, created = cls.objects.get_or_create(id=1, defaults={'is_running': False})
+        return status
     
     
