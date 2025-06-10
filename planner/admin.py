@@ -12,9 +12,9 @@ class TopicAdmin(admin.ModelAdmin):
     readonly_fields = ('user',)
     ordering = ('id',)
     
-
+    # save the user who created the topic
     def save_model(self, request, obj, form, change):
-        if not obj.pk:  # When creating a new object
+        if not obj.pk: 
             obj.user = request.user
         super().save_model(request, obj, form, change)
 
@@ -48,8 +48,9 @@ class TaskAdmin(admin.ModelAdmin):
     ordering = ('id',)
     inlines = [QuestionInline]
 
+    # save the user who created the task
     def save_model(self, request, obj, form, change):
-        if not obj.pk:  # When creating a new object
+        if not obj.pk: 
             obj.user = request.user
         super().save_model(request, obj, form, change)
 

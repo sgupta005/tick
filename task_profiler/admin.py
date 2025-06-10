@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Profile, TaskLog
 # Register your models here.
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'slack_auth')
@@ -8,9 +9,9 @@ class ProfileAdmin(admin.ModelAdmin):
     readonly_fields = ('user',)
     ordering = ('id',)
 
-
+    # save the user who created the profile
     def save_model(self, request, obj, form, change):
-        if not obj.pk:  # When creating a new object
+        if not obj.pk: 
             obj.user = request.user
         super().save_model(request, obj, form, change)
 

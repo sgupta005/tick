@@ -44,6 +44,7 @@ class Question(models.Model):
     question = models.TextField()
     answer = models.TextField(blank=True, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    timestamp = models.CharField(max_length=200, blank=True, null=True)
     
     def __str__(self):
         return self.question
