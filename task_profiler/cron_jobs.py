@@ -1,5 +1,6 @@
 from task_profiler.models import TaskLog
-from task_profiler.utils import get_active_tasks_for_today
+from task_profiler.utils import get_active_tasks_for_today, get_pending_questions_for_today, create_replies_for_question
+from task_profiler.slack import get_question_replies_from_slack
 
 def create_tasklogs():
     print("Starting to process tasks for today...")
@@ -23,3 +24,29 @@ def create_tasklogs():
 
     except Exception as e:
         print(f"An error occurred: {e}")
+
+def check_pending_questions_replies():
+    try:
+        pending_questions = get_pending_questions_for_today()
+        if not pending_questions.exists():
+            print("No pending questions for today.")
+            return
+        print(f"Found {len(pending_questions)} pending question(s).")
+
+        for question in pending_questions:
+            result = get_question_replies_from_slack(question.task.topic.slack_channel, question.timestamp, question.task.topic.workspace.bot_token)
+            question.thread = result.get("slack_response")
+            replies = result.get("replies")
+            if (len(replies) > 0):
+                create_replies_for_question(question, replies)
+                question.is_pending = False
+            question.save()
+        
+        print("Finished processing all questions.")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def check_all_quesitons_replies():
+    pass

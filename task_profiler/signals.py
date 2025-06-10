@@ -1,7 +1,9 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import TaskLog
-from .utils import send_slack_message, get_question_from_openai, create_question_for_task, get_question_replies_from_slack
+from .opeanai import get_question_from_openai
+from .slack import send_slack_message
+from .utils import create_question_for_task
 
 @receiver(post_save, sender=TaskLog)
 def task_log_post_save(sender, instance, created, **kwargs):
