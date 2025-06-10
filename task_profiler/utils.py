@@ -8,7 +8,12 @@ def get_active_tasks_for_today():
 
 def get_pending_questions_for_today():
     today = datetime.now().date()
-    questions = Question.objects.filter(is_pending=True)
+    questions = Question.objects.filter(is_pending=True, task__due_date=today)
+    return questions
+
+def get_all_questions_for_today():
+    today = datetime.now().date()
+    questions = Question.objects.filter(task__due_date=today)
     return questions
 
 def create_question_for_task(task, question, question_ts):
@@ -21,10 +26,11 @@ def create_question_for_task(task, question, question_ts):
     
 def create_replies_for_question(question, replies):
     for reply in replies:
-        Reply.objects.create(
-            question=question,
-            text=reply.get("text"),
-            timestamp=reply.get("ts")
-        )
+        if (not Reply.objects.filter(question=question, timestamp=reply.get("ts")).exists()):
+            Reply.objects.create(
+                question=question,
+                text=reply.get("text"),
+                timestamp=reply.get("ts")
+            )
 
 

@@ -35,7 +35,7 @@ def get_question_replies_from_slack(channel, question_ts, slack_bot_token):
             }
             for msg in response["messages"][1:]
         ]
-        return {"replies":replies, "slack_response":response}
+        return {"replies":replies, "thread":response}
     except SlackApiError as e:
         print(f"Error fetching replies: {e.response['error']}")
-        return {"replies":[], "slack_response":None}
+        return {"replies":[], "thread":None}
