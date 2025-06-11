@@ -64,3 +64,8 @@ def toggle_cronjob(request):
             messages.error(request, f'Error toggling cronjobs: {str(e)}')
     
     return redirect('cron_dashboard')
+
+@never_cache
+@login_required
+def report(request):
+    return render(request, 'task_profiler/report.html')
