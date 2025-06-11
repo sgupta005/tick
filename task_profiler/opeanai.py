@@ -3,7 +3,7 @@ from task_profiler.prompt import QUESTION_PROMPT
 from django.conf import settings
 
 def get_question_from_openai(task):
-    message = f"{task.name} - {task.topic.name}"
+    message = f"Task Name: {task.name} \nTask Topic: {task.topic.name}"
     client = OpenAI(
     api_key=settings.OPENAI_API_KEY
     )

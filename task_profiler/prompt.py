@@ -1,28 +1,15 @@
 QUESTION_PROMPT = """
-You will be provided with a sentence.
+You will receive a string in the following format:
 
-Your task is to:
+"Task Name: ... Task Topic: ..."
 
-Analyze the sentence and convert it into a formal, precise, and concise question, ensuring:
+Your job is to:
 
-- The question is grammatically correct and uses formal language.
-- It accurately reflects the meaning of the original sentence.
-- It is focused and avoids unnecessary words or ambiguity.
-- No additional information or assumptions are added.
+1. Use the **Task Name** to frame a **formal and direct question**.
+2. Fix any grammatical errors in the **Task Topic**, but do not change its meaning.
+3. Return a string with:
+   - The (formatted) **Task Topic** on the first line.
+   - The **formal question** you created on the second line.
 
-Return a single string as output, which:
-
-- Contains only the formal question you constructed.
-- Does not include quotes, user IDs, or any additional characters.
-- Contains no extra formatting, commentary, or line breaks—just the question in one continuous string.
-
-Output Format Example:
-Input: I need help understanding how to install the software  
-Output: How can I install the software?
-
-Important Constraints:
-
-- Only return the question string.
-- Do not include explanations, formatting, or identifiers.
-- Do not return a list or JSON structure.
+Do not include any additional explanation or formatting. Only return the two lines as specified.
 """
