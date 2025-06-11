@@ -14,10 +14,10 @@ def send_slack_message(message,task):
             channel=channel,
             text=message_with_slack_user
         )
-        return {"slack_response":response, "ts":response["ts"]}
+        return {"error":False, "slack_response":response, "ts":response["ts"]}
     except SlackApiError as e:
         assert e.response["error"]   
-        return {"slack_response":None, "ts":None}
+        return {"error":True, "slack_response":None, "ts":None}
 
 def get_question_replies_from_slack(channel, question_ts, slack_bot_token):
     client = WebClient(slack_bot_token)
@@ -35,7 +35,7 @@ def get_question_replies_from_slack(channel, question_ts, slack_bot_token):
             }
             for msg in response["messages"][1:]
         ]
-        return {"replies":replies, "thread":response}
+        return {"error":False, "replies":replies, "thread":response}
     except SlackApiError as e:
         print(f"Error fetching replies: {e.response['error']}")
-        return {"replies":[], "thread":None}
+        return {"error":True, "replies":[], "thread":None}

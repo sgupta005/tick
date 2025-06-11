@@ -36,12 +36,13 @@ def check_pending_questions_replies():
 
         for question in pending_questions:
             result = get_question_replies_from_slack(question.task.topic.slack_channel, question.timestamp, question.task.topic.workspace.bot_token)
-            question.thread = result.get("thread")
-            replies = result.get("replies")
-            if (len(replies) > 0):
-                create_replies_for_question(question, replies)
-                question.is_pending = False
-            question.save()
+            if (not result.get("error")):
+                question.thread = result.get("thread")
+                replies = result.get("replies")
+                if (len(replies) > 0):
+                    create_replies_for_question(question, replies)
+                    question.is_pending = False
+                question.save()
         
         print("Finished processing all questions.")
 
@@ -59,12 +60,13 @@ def check_all_quesitons_replies():
 
         for question in questions:
             result = get_question_replies_from_slack(question.task.topic.slack_channel, question.timestamp, question.task.topic.workspace.bot_token)
-            question.thread = result.get("thread")
-            replies = result.get("replies")
-            if (len(replies) > 0):
-                create_replies_for_question(question, replies)
-                question.is_pending = False
-            question.save()
+            if (not result.get("error")):
+                question.thread = result.get("thread")
+                replies = result.get("replies")
+                if (len(replies) > 0):
+                    create_replies_for_question(question, replies)
+                    question.is_pending = False
+                question.save()
         
         print("Finished processing all questions.")
 
