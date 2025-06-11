@@ -7,6 +7,8 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     slack_auth = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
@@ -36,7 +38,9 @@ class Question(models.Model):
     answer = models.TextField(blank=True, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     timestamp = models.CharField(max_length=200)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.question
     
@@ -57,6 +61,8 @@ class Reply(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.TextField()
     timestamp = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Reply"

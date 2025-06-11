@@ -5,9 +5,9 @@ from .forms import ReplyInlineForm
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'slack_auth')
+    list_display = ('id', 'user', 'slack_auth', 'created_at', 'updated_at')
     search_fields = ('user__username', 'slack_auth')
-    readonly_fields = ('user',)
+    readonly_fields = ('user', 'created_at', 'updated_at')
     ordering = ('id',)
 
     # save the user who created the profile
@@ -21,6 +21,7 @@ class TaskLogAdmin(admin.ModelAdmin):
     list_display = ('id', 'task', 'created_at', 'updated_at')
     search_fields = ('task__name',)
     ordering = ('id',)
+    readonly_fields = ('created_at', 'updated_at')
 
 @admin.register(CronJobStatus)
 class CronJobStatusAdmin(admin.ModelAdmin):
@@ -35,18 +36,19 @@ class ReplyInline(admin.TabularInline):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question','is_pending', 'task', 'timestamp')
+    list_display = ('id', 'question','is_pending', 'task', 'timestamp', 'created_at', 'updated_at')
     list_filter = ('task',)
     search_fields = ('question', 'task__name')
     ordering = ('id',)
+    readonly_fields = ('created_at', 'updated_at')
     inlines = [ReplyInline]
 
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'text', 'timestamp')
+    list_display = ('id', 'question', 'text', 'timestamp', 'created_at', 'updated_at')
     list_filter = ('question',)
     search_fields = ('question__question', 'text')
     ordering = ('id',)
-    readonly_fields = ('question',)
+    readonly_fields = ('question', 'created_at', 'updated_at')
 
 

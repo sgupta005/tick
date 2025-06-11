@@ -7,6 +7,8 @@ class Workspace(models.Model):
     name = models.CharField(max_length=200)
     bot_token = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -17,6 +19,8 @@ class Topic(models.Model):
     name = models.CharField(max_length=200)
     slack_channel = models.CharField(max_length=200, null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.name
@@ -25,6 +29,8 @@ class Assignee(models.Model):
     name = models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
     slack_user= models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -36,6 +42,8 @@ class Task(models.Model):
     assignee = models.ForeignKey(Assignee, on_delete=models.CASCADE)
     due_date = models.DateField()
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.name

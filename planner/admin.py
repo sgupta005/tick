@@ -6,11 +6,11 @@ from task_profiler.forms import QuestionInlineForm
 # Register your models here.
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slack_channel', 'is_active', 'user')
+    list_display = ('id', 'name', 'slack_channel', 'is_active', 'user', 'created_at', 'updated_at')
     list_filter = ('is_active',)
     search_fields = ('name', 'slack_channel')
     list_editable = ('is_active',)
-    readonly_fields = ('user',)
+    readonly_fields = ('user','created_at', 'updated_at')
     ordering = ('id',)
     
     # save the user who created the topic
@@ -21,11 +21,12 @@ class TopicAdmin(admin.ModelAdmin):
 
 @admin.register(Assignee)
 class AssigneeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'is_active', 'slack_user')
+    list_display = ('id', 'name', 'is_active', 'slack_user', 'created_at', 'updated_at')
     list_filter = ('is_active',)
     search_fields = ('name', 'slack_user')
     list_editable = ('is_active',)
     ordering = ('id',)
+    readonly_fields = ('created_at', 'updated_at')
 
 class QuestionInline(admin.TabularInline):
     model = Question
@@ -34,11 +35,11 @@ class QuestionInline(admin.TabularInline):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'topic', 'assignee', 'due_date', 'is_active', 'user')
+    list_display = ('id', 'name', 'topic', 'assignee', 'due_date', 'is_active', 'user', 'created_at', 'updated_at')
     list_filter = ('is_active', 'topic', 'assignee')
     search_fields = ('name', 'assignee__name', 'topic__name')
     list_editable = ('is_active',)
-    readonly_fields = ('user',)
+    readonly_fields = ('user','created_at', 'updated_at')
     ordering = ('id',)
     inlines = [QuestionInline]
 
@@ -51,8 +52,9 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Workspace)
 class WorkspaceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'is_active')
+    list_display = ('id', 'name', 'is_active', 'created_at', 'updated_at')
     list_filter = ('is_active',)
     search_fields = ('name',)
     list_editable = ('is_active',)
     ordering = ('id',)
+    readonly_fields = ('created_at', 'updated_at')
