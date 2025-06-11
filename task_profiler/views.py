@@ -10,6 +10,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from planner.models import Topic
 
+def landing_page(request):
+    """Landing page that redirects based on authentication status"""
+    if request.user.is_authenticated:
+        return redirect('cron_dashboard')
+    else:
+        return redirect('login')
+
 def slack_oauth_callback(request):
     code = request.GET.get("code")
     if not code:
