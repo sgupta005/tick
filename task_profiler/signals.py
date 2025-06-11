@@ -17,11 +17,14 @@ def task_log_post_save(sender, instance, created, **kwargs):
         instance.openai_log = openai_result["openai_response"]
         # send the question to slack
         slack_result = send_slack_message(question,instance.task)
-        question_ts = slack_result["ts"]
-        instance.slack_post_log = slack_result["slack_response"]
-        # use the question to create a new question object
-        question_obj = create_question_for_task(instance.task, question, question_ts)
-        instance.question = question_obj
-        # save the changes made to tasklog
+        if (not slack_result.get("error")):
+            question_ts = slack_result["ts"]
+            instance.slack_post_log = slack_result["slack_response"]
+            # use the question to create a new question object
+            question_obj = create_question_for_task(instance.task, question, question_ts)
+            instance.question = question_obj
+            # save the changes made to tasklog
+        else:
+            instance.slack_post_log = slack_result["slack_response"]
         instance.save()
         

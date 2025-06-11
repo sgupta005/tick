@@ -1,4 +1,5 @@
-from planner.models import Task, Question, Reply
+from planner.models import Task
+from .models import Question, Reply
 from datetime import datetime
 
 def get_active_tasks_for_today():

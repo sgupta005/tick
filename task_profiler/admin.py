@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Profile, TaskLog, CronJobStatus
+from .models import Profile, TaskLog, CronJobStatus, Question, Reply
+from .forms import ReplyInlineForm
 # Register your models here.
 
 @admin.register(Profile)
@@ -26,5 +27,26 @@ class CronJobStatusAdmin(admin.ModelAdmin):
     list_display = ('id', 'is_running', 'created_at', 'updated_at')
     readonly_fields = ('created_at', 'updated_at')
     ordering = ('id',)
+
+class ReplyInline(admin.TabularInline):
+    model = Reply
+    extra = 0
+    form = ReplyInlineForm
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question','is_pending', 'task', 'timestamp')
+    list_filter = ('task',)
+    search_fields = ('question', 'task__name')
+    ordering = ('id',)
+    inlines = [ReplyInline]
+
+@admin.register(Reply)
+class ReplyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'text', 'timestamp')
+    list_filter = ('question',)
+    search_fields = ('question__question', 'text')
+    ordering = ('id',)
+    readonly_fields = ('question',)
 
 

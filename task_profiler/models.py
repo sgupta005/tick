@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from planner.models import Task, Question
+from planner.models import Task
 # Create your models here.
 
 class Profile(models.Model):
@@ -11,17 +11,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-class TaskLog(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
-    openai_log = models.TextField(blank=True, null=True)
-    slack_post_log = models.TextField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.task.name
 
 class CronJobStatus(models.Model):
     is_running = models.BooleanField(default=False)
@@ -39,5 +28,41 @@ class CronJobStatus(models.Model):
     def get_status(cls):
         status, created = cls.objects.get_or_create(id=1, defaults={'is_running': False})
         return status
+    
+class Question(models.Model):
+    is_pending  = models.BooleanField(default=True)
+    thread = models.TextField(blank=True, null=True)
+    question = models.TextField()
+    answer = models.TextField(blank=True, null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    timestamp = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.question
+    
+class TaskLog(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
+    openai_log = models.TextField(blank=True, null=True)
+    slack_post_log = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.task.name
+    
+    
+class Reply(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.TextField()
+    timestamp = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name = "Reply"
+        verbose_name_plural = "Replies"
+    
+    def __str__(self):
+        return self.text
     
     
