@@ -5,9 +5,10 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.management import call_command
-from .models import CronJobStatus
+from .models import CronJobStatus, Question, Reply
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from planner.models import Topic
 
 def slack_oauth_callback(request):
     code = request.GET.get("code")
@@ -68,4 +69,11 @@ def toggle_cronjob(request):
 @never_cache
 @login_required
 def report(request):
-    return render(request, 'task_profiler/report.html')
+    # Get all active topics with their related data
+    topics = Topic.objects.filter(is_active=True).prefetch_related(
+        'task_set__question_set__reply_set'
+    ).order_by('name')
+    
+    return render(request, 'task_profiler/report.html', {
+        'topics': topics
+    })
