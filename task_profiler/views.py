@@ -13,7 +13,7 @@ from planner.models import Topic
 def landing_page(request):
     """Landing page that redirects based on authentication status"""
     if request.user.is_authenticated:
-        return redirect('cron_dashboard')
+        return redirect('system_health')
     else:
         return redirect('login')
 
@@ -39,10 +39,10 @@ def slack_oauth_callback(request):
 
 @never_cache
 @login_required
-def cron_dashboard(request):
+def system_health(request):
     """Display the cronjob control dashboard"""
     status = CronJobStatus.get_status()
-    return render(request, 'task_profiler/cron_dashboard.html', {
+    return render(request, 'task_profiler/system_health.html', {
         'cron_enabled': status.is_running
     })
 
@@ -71,7 +71,7 @@ def toggle_cronjob(request):
         except Exception as e:
             messages.error(request, f'Error toggling cronjobs: {str(e)}')
     
-    return redirect('cron_dashboard')
+    return redirect('system_health')
 
 @never_cache
 @login_required

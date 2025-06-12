@@ -153,6 +153,6 @@ CRONJOBS = [
 
 # Authentication settings
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/cron-dashboard/'
+LOGIN_REDIRECT_URL = '/system-health/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 

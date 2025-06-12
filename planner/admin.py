@@ -10,7 +10,6 @@ class TopicAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     search_fields = ('name', 'slack_channel')
     list_editable = ('is_active',)
-    readonly_fields = ('user','created_at', 'updated_at')
     ordering = ('id',)
     
     # save the user who created the topic
@@ -26,7 +25,6 @@ class AssigneeAdmin(admin.ModelAdmin):
     search_fields = ('name', 'slack_user')
     list_editable = ('is_active',)
     ordering = ('id',)
-    readonly_fields = ('created_at', 'updated_at')
 
 class QuestionInline(admin.TabularInline):
     model = Question
@@ -39,7 +37,6 @@ class TaskAdmin(admin.ModelAdmin):
     list_filter = ('is_active', 'topic', 'assignee')
     search_fields = ('name', 'assignee__name', 'topic__name')
     list_editable = ('is_active',)
-    readonly_fields = ('user','created_at', 'updated_at')
     ordering = ('id',)
     inlines = [QuestionInline]
 
@@ -57,4 +54,3 @@ class WorkspaceAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_editable = ('is_active',)
     ordering = ('id',)
-    readonly_fields = ('created_at', 'updated_at')

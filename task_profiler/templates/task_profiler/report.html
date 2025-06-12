@@ -3,7 +3,8 @@
 {% block title %}Task Report{% endblock %}
 
 {% block nav_links %}
-<a href="{% url 'cron_dashboard' %}" class="nav-link">📊 Cronjob Dashboard</a>
+<a href="{% url 'system_health' %}" class="nav-link">📊 System Health</a>
+<a href="{% url 'report' %}" class="nav-link active">📋 Task Report</a>
 {% endblock %}
 
 {% block extra_css %}

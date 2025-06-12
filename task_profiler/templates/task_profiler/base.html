@@ -59,6 +59,18 @@
             color: #0056b3;
         }
         
+        .nav-link.active {
+            background-color: #495057;
+            color: white;
+            border-color: #495057;
+        }
+        
+        .nav-link.active:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+            color: white;
+        }
+        
         .logout-btn {
             background-color: #495057;
             color: white;
@@ -87,7 +99,10 @@
         <div class="top-header-content">
             <div class="header-left">
                 <div class="welcome-text">Hello {{ user.username }}</div>
-                {% block nav_links %}{% endblock %}
+                {% block nav_links %}
+                    <a href="{% url 'system_health' %}" class="nav-link {% if request.resolver_match.url_name == 'system_health' %}active{% endif %}">📊 System Health</a>
+                    <a href="{% url 'report' %}" class="nav-link {% if request.resolver_match.url_name == 'report' %}active{% endif %}">📋 Task Report</a>
+                {% endblock %}
             </div>
             <form method="post" action="{% url 'logout' %}" style="margin: 0;">
                 {% csrf_token %}

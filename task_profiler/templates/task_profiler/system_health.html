@@ -3,6 +3,7 @@
 {% block title %}Cronjob Control Dashboard{% endblock %}
 
 {% block nav_links %}
+<a href="{% url 'system_health' %}" class="nav-link active">📊 System Health</a>
 <a href="{% url 'report' %}" class="nav-link">📋 Task Report</a>
 {% endblock %}
 
@@ -102,7 +103,7 @@
 
 {% block content %}
     <div class="container">
-        <h1>Cronjob Control Dashboard</h1>
+        <h1>System Health</h1>
 
         <!-- Display messages -->
         {% if messages %}
