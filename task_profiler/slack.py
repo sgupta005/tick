@@ -7,12 +7,12 @@ def send_slack_message(message,task):
     slack_bot_token = task.topic.workspace.bot_token
 
     client = WebClient(slack_bot_token)
-    message_with_slack_user = f"<@{assignee_slack_user}> {message}"
+
 
     try:
         response = client.chat_postMessage(
             channel=channel,
-            text=message_with_slack_user
+            text=message
         )
         return {"error":False, "slack_response":response, "ts":response["ts"]}
     except SlackApiError as e:

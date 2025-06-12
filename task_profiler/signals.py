@@ -13,7 +13,7 @@ def task_log_post_save(sender, instance, created, **kwargs):
     if created:
         # send message to chatgpt to frame a formal question
         openai_result = get_question_from_openai(instance.task)
-        question = openai_result["output"]
+        question = f"{instance.task.topic.name} \n<@{instance.task.assignee.slack_user}> {openai_result['output']}"
         instance.openai_log = openai_result["openai_response"]
         # send the question to slack
         slack_result = send_slack_message(question,instance.task)
