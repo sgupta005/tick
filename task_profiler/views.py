@@ -9,6 +9,7 @@ from .models import CronJobStatus, Question, Reply
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from planner.models import Topic
+from django.db.models import Count
 
 def landing_page(request):
     """Landing page that redirects based on authentication status"""
@@ -77,7 +78,9 @@ def toggle_cronjob(request):
 @login_required
 def report(request):
     # Get all active topics with their related data
-    topics = Topic.objects.filter(is_active=True).prefetch_related(
+    topics = Topic.objects.filter(is_active=True).annotate(
+        num_questions=Count('task__question', distinct=True)
+    ).prefetch_related(
         'task_set__question_set__reply_set'
     ).order_by('name')
     

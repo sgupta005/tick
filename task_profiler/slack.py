@@ -3,11 +3,9 @@ from slack_sdk.errors import SlackApiError
 
 def send_slack_message(message,task):
     channel = task.topic.slack_channel
-    assignee_slack_user = task.assignee.slack_user
     slack_bot_token = task.topic.workspace.bot_token
 
     client = WebClient(slack_bot_token)
-
 
     try:
         response = client.chat_postMessage(
