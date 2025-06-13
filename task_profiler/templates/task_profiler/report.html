@@ -262,14 +262,14 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Replies</th>
-                                                                <th>Timestamp</th>
+                                                                <th>User Id</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {% for reply in question.reply_set.all %}
                                                             <tr>
                                                                 <td>{{ reply.text }}</td>
-                                                                <td>{{ reply.timestamp }}</td>
+                                                                <td>{{ reply.slack_user }}</td>
                                                             </tr>
                                                             {% endfor %}
                                                         </tbody>

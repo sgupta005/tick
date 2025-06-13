@@ -39,7 +39,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    assignee = models.ForeignKey(Assignee, on_delete=models.CASCADE)
+    assignee = models.ForeignKey(Assignee, on_delete=models.CASCADE,blank=True, null=True)
     due_date = models.DateField()
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

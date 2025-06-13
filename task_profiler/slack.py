@@ -29,6 +29,7 @@ def get_question_replies_from_slack(channel, question_ts, slack_bot_token):
         replies = [
             {
                 "text": msg["text"],
+                "user": msg["user"],
                 "ts": msg["ts"]
             }
             for msg in response["messages"][1:]
