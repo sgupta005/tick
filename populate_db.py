@@ -1,6 +1,9 @@
 import os
 import django
 import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set up Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tick.settings')
@@ -33,7 +36,7 @@ def populate_database():
         {
             'name': 'EFI',
             # --- ENTER YOUR BOT TOKEN HERE ---
-            'bot_token': 'xoxb-9011218437620-9016283349026-9xFrWOMuu6ZYpsKCyYrFb1SG',
+            'bot_token': os.getenv('SLACK_BOT_TOKEN'),
             'topics': [
                 {
                     'name': 'Deal Scanner',
