@@ -41,9 +41,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'text', 'slack_user', 'timestamp', 'created_at', 'updated_at')
-    list_filter = ('question',)
-    search_fields = ('question__question', 'text', 'slack_user')
+    list_display = ('id', 'question', 'text', 'replier_slack_user', 'replier_name', 'timestamp', 'created_at', 'updated_at')
+    list_filter = ('question', 'replier_name')
+    search_fields = ('question__question', 'text', 'replier_name')
     ordering = ('id',)
 
 

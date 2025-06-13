@@ -27,10 +27,12 @@ def create_question_for_task(task, question, question_ts):
     
 def create_replies_for_question(question, replies):
     for reply in replies:
-        if (not Reply.objects.filter(question=question, timestamp=reply.get("ts")).exists()):
+        if (not Reply.objects.filter(timestamp=reply.get("ts")).exists()):
             Reply.objects.create(
                 question=question,
                 text=reply.get("text"),
+                replier_slack_user=reply.get("replier_slack_user"),
+                replier_name = reply.get("replier_name"),
                 timestamp=reply.get("ts")
             )
 

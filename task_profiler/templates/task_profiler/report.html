@@ -266,15 +266,15 @@
                                                     <table>
                                                         <thead>
                                                             <tr>
+                                                                <th>Replier Name</th>
                                                                 <th>Replies</th>
-                                                                <th>User Id</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {% for reply in question.reply_set.all %}
                                                             <tr>
+                                                                <td>{{ reply.replier_name }}</td>
                                                                 <td>{{ reply.text }}</td>
-                                                                <td>{{ reply.slack_user }}</td>
                                                             </tr>
                                                             {% endfor %}
                                                         </tbody>
