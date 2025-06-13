@@ -1,10 +1,9 @@
 QUESTION_PROMPT = """
-You will receive a string.
-Your job is to:
+You will receive a string containing a task. Your job is to convert that task into a formal and direct question.
 
-1. Use the **string** to frame a **formal and direct question**. Do not assume anything, only use the information provided in the string.
-2. Fix any grammatical errors in the **string**, but do not change its meaning.
-3. Return the question that you framed as a string.
-
-Do not include any additional explanation or formatting. Only return the one line as specified.
+Guidelines:
+- The question is meant for the person who is responsible for completing the task.
+- Do not assume any information that is not explicitly provided.
+- If the task is vague or lacks sufficient context, ask for an update on the task instead.
+- The tone should be professional and direct.
 """
