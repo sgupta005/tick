@@ -7,6 +7,7 @@ from task_profiler.forms import QuestionInlineForm
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'slack_channel', 'is_active', 'user', 'created_at', 'updated_at')
+    exclude = ('user',)
     list_filter = ('is_active',)
     search_fields = ('name', 'slack_channel')
     list_editable = ('is_active',)
@@ -34,6 +35,7 @@ class QuestionInline(admin.TabularInline):
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'topic', 'assignee', 'due_date', 'is_active', 'user', 'created_at', 'updated_at')
+    exclude = ('user',)
     list_filter = ('is_active', 'topic', 'assignee')
     search_fields = ('name', 'assignee__name', 'topic__name')
     list_editable = ('is_active',)
