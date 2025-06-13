@@ -1,5 +1,5 @@
 {% extends 'task_profiler/base.html' %}
-
+{% load custom_tags %}
 {% block title %}Task Report{% endblock %}
 
 {% block nav_links %}
@@ -267,7 +267,8 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Replier Name</th>
-                                                                <th>Replies</th>
+                                                                <th>Reply</th>
+                                                                <th>Time</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -275,6 +276,7 @@
                                                             <tr>
                                                                 <td>{{ reply.replier_name }}</td>
                                                                 <td>{{ reply.text }}</td>
+                                                                <td>{{ reply.timestamp|convert_slack_timestamp }}</td>
                                                             </tr>
                                                             {% endfor %}
                                                         </tbody>

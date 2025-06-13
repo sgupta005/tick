@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from planner.models import Topic
 from django.db.models import Count
+from .utils import convert_slack_timestamp
 
 def landing_page(request):
     """Landing page that redirects based on authentication status"""
@@ -85,5 +86,5 @@ def report(request):
     ).order_by('name')
     
     return render(request, 'task_profiler/report.html', {
-        'topics': topics
+        'topics': topics,
     })
