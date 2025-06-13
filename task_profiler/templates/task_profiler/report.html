@@ -68,6 +68,11 @@
             background: #e9ecef;
         }
         
+        .accordion-header > span:first-child {
+            margin-right: 1rem;
+            word-break: break-word;
+        }
+        
         .accordion-header.task {
             background: #ffffff;
             font-size: 1em;
@@ -251,7 +256,7 @@
                                     {% for question in task.question_set.all %}
                                     <div class="accordion">
                                         <div class="accordion-header question" onclick="toggleAccordion(this)">
-                                            <span>Question: {{ question.question|truncatechars:80 }} ({{ question.reply_set.count }} replies)</span>
+                                            <span>Question: {{ question.question }} ({{ question.reply_set.count }} replies)</span>
                                             <span class="accordion-icon">▼</span>
                                         </div>
                                         <div class="accordion-content">
